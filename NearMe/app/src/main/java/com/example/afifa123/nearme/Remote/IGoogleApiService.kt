@@ -7,6 +7,7 @@ import retrofit2.http.Url
 
 interface IGoogleApiService {
     @GET
-    fun getNearByPlaces(@Url url: String):Call<MyPlaces>
+    fun getNearByPlaces(@Url url: String
+    ):Call<MyPlaces>
 
 }

@@ -1,4 +1,4 @@
-package com.example.afifa123.nearme
+package com.example.afifa123.nearme.Dashboard
 
 import android.content.Context
 import android.content.pm.PackageManager
@@ -14,9 +14,14 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.afifa123.nearme.Adapter.PlacesListAdapter
 import com.example.afifa123.nearme.Common.Common
 import com.example.afifa123.nearme.Model.MyPlaces
+import com.example.afifa123.nearme.R
 import com.example.afifa123.nearme.Remote.IGoogleApiService
+import com.example.afifa123.nearme.Utility.Utility
 import com.google.android.gms.location.*
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -25,6 +30,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.layout_place_row.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -58,6 +64,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        if (Utility.isOnline(this)){
+
+        }
 
         //init service
         mServices = Common.googleApiService
@@ -124,13 +134,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             markerOptions.title(placeName)
 
                             if (typePlace.equals("hospital"))
-                                markerOptions.icon(bitmapDescriptorFromVector(applicationContext,R.drawable.ic_local_hospital))
+                                markerOptions.icon(bitmapDescriptorFromVector(applicationContext,
+                                    R.drawable.ic_local_hospital
+                                ))
                             else  if (typePlace.equals("market"))
-                                markerOptions.icon(bitmapDescriptorFromVector(applicationContext,R.drawable.ic_shopping_cart))
+                                markerOptions.icon(bitmapDescriptorFromVector(applicationContext,
+                                    R.drawable.ic_shopping_cart
+                                ))
                             else if (typePlace.equals("restaurant"))
-                                markerOptions.icon(bitmapDescriptorFromVector(applicationContext,R.drawable.ic_restaurant))
+                                markerOptions.icon(bitmapDescriptorFromVector(applicationContext,
+                                    R.drawable.ic_restaurant
+                                ))
                             else  if (typePlace.equals("school"))
-                                markerOptions.icon(bitmapDescriptorFromVector(applicationContext,R.drawable.ic_school))
+                                markerOptions.icon(bitmapDescriptorFromVector(applicationContext,
+                                    R.drawable.ic_school
+                                ))
                             else
                                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
 
@@ -142,7 +160,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
                             mMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
 
+                           
                         }
+
                     }
 
                 }
@@ -206,11 +226,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,android.Manifest.permission.ACCESS_FINE_LOCATION))
                 ActivityCompat.requestPermissions(this, arrayOf(
                     android.Manifest.permission.ACCESS_FINE_LOCATION
-                ),MY_PERMISSION_CODE)
+                ), MY_PERMISSION_CODE
+                )
             else
                 ActivityCompat.requestPermissions(this, arrayOf(
                     android.Manifest.permission.ACCESS_FINE_LOCATION
-                ),MY_PERMISSION_CODE)
+                ), MY_PERMISSION_CODE
+                )
             return false
         }
         else
@@ -224,7 +246,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         grantResults: IntArray
     ) {
         when(requestCode){
-            MY_PERMISSION_CODE->{
+            MY_PERMISSION_CODE ->{
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     if (ContextCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
                         if (checkLocationPermission()){

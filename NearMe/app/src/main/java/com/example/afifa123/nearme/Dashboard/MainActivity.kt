@@ -1,7 +1,8 @@
-package com.example.afifa123.nearme
+package com.example.afifa123.nearme.Dashboard
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.afifa123.nearme.R
 
 class MainActivity : AppCompatActivity() {
 

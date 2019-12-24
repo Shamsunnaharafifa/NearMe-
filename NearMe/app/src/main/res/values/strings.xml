@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">NearMe</string>
     <string name="title_activity_maps">Map</string>
+    <string name="place_name">Place name</string>
+    <string name="place_address">Place Address</string>
+    <string name="place_opening_hour">Opening hour: </string>
+    <string name="show_on_map">Show on map</string>
 </resources>

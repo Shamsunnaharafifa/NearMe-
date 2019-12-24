@@ -1,6 +1,7 @@
 package com.example.afifa123.nearme.Dashboard
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -160,7 +161,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
                             mMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
 
-                           
                         }
 
                     }
@@ -283,5 +283,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             mMap !!.isMyLocationEnabled = true
 
         mMap.uiSettings.isZoomControlsEnabled = true
+
+        //make event click on marker
+        mMap.setOnMarkerClickListener { marker ->
+            Common.currentResult = currentPlace!!.results!![Integer.parseInt(marker.snippet)]
+            startActivity(Intent(this@MapsActivity,ViewPlace::class.java))
+            true
+        }
     }
 }
